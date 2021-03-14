@@ -13,7 +13,10 @@
     <body>
         <div class="container">
             <a href="/create" class="btn btn-primary mt-3 mb-3">Create Article</a>
-            <a href="/genre" class="btn btn-primary mt-3 mb-3">Create Genre</a>
+            <a href="/genre" class="btn btn-primary mt-3 mb-3">Create Genre</a><br>
+            @if($message = Session::get('success'))
+                <strong>{{$message}}</strong>
+            @endif
             <table class="table">
                 <thead>
                     <tr>
@@ -22,6 +25,7 @@
                         <th scope="col">Judul</th>
                         <th scope="col">Deskripsi</th>
                         <th scope="col">Genre</th>
+                        <th scope="col">Image</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -33,6 +37,7 @@
                         <td>{{$article->judul}}</td>
                         <td>{{$article->deskripsi}}</td>
                         <td>{{$article->genre->name}}</td>
+                        <td><img src="{{asset('storage/images/' . $article->image)}}" width="50" height="50" alt=""></td>
                         <td>
                             <a href="/update/{{$article->id}}" class="btn btn-success">Edit</a>
                             <form action="/delete/{{$article->id}}" method="POST">

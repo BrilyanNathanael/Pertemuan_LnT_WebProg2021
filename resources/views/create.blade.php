@@ -12,7 +12,7 @@
     <body>
         <div class="container">
             <h1>Menambahkan Data</h1>
-            <form action="/stores" method="POST">
+            <form action="/stores" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="penulis">Penulis</label>
@@ -33,6 +33,10 @@
                             <option value="{{$genre->id}}">{{$genre->name}}</option>
                         @endforeach
                     </select>
+                </div>
+                <div class="form-group">
+                    <label for="image">Image</label><br>
+                    <input type="file" name="image" id="image">
                 </div>
                 <a href="/" class="btn btn-success">Kembali</a>
                 <button class="btn btn-primary">Tambah</button>

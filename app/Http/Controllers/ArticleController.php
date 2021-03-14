@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Article;
 use App\Genre;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -23,14 +24,19 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         // insert
+        $image = $request->file('image');
+        $new_name = time() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('storage/images'), $new_name);
+
         Article::create([
             'genre_id' => $request->genre_id,
             'penulis' => $request->penulis,
             'judul' => $request->judul,
-            'deskripsi' => $request->deskripsi
+            'deskripsi' => $request->deskripsi,
+            'image' => $new_name
         ]);
 
-        return redirect('/create');
+        return redirect('/')->with('success', 'Data Success');
     }
 
     public function edit($id)
@@ -41,18 +47,25 @@ class ArticleController extends Controller
 
     public function update(Request $request, $id)
     {
+        $image = $request->file('image');
+        $new_name = time() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('storage/images'), $new_name);
+
         Article::where('id', $id)
             ->update([
                 'penulis' => $request->penulis,
                 'judul' => $request->judul,
-                'deskripsi' => $request->deskripsi
+                'deskripsi' => $request->deskripsi,
+                'image' => $new_name
             ]);
-        
+
         return redirect('/');
     }
 
     public function destroy($id)
     {
+        $image = Article::find($id);
+        Storage::delete('images/' . $image->image);
         Article::destroy($id);
         return redirect('/');
     }

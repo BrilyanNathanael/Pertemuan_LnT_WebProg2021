@@ -20,6 +20,7 @@ class CreateArticlesTable extends Migration
             $table->string('penulis');
             $table->string('judul');
             $table->longText('deskripsi');
+            $table->string('image');
             $table->timestamps();
         });
     }

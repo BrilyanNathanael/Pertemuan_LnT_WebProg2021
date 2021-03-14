@@ -12,7 +12,7 @@
     <body>
         <div class="container">
             <h1>Mengubah Data</h1>
-            <form action="/update/{{$article->id}}" method="POST">
+            <form action="/update/{{$article->id}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('put')
                 <div class="form-group">
@@ -26,6 +26,11 @@
                 <div class="form-group">
                     <label for="deskripsi">Deskripsi</label>
                     <input type="text" value="{{$article->deskripsi}}" name="deskripsi" class="form-control" id="deskripsi" placeholder="Deskripsi">
+                </div>
+                <div class="form-group">
+                    <label for="image">Image</label><br>
+                    <input type="file" name="image" id="image"><br>
+                    <img src="{{asset('storage/images/' . $article->image)}}" width="100" height="100" alt="">
                 </div>
                 <button class="btn btn-primary">Ubah</button>
             </form>
