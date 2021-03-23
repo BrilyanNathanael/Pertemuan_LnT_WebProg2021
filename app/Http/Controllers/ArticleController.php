@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Article;
 use App\Genre;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SubscriptionMail;
 
 class ArticleController extends Controller
 {
@@ -60,6 +62,10 @@ class ArticleController extends Controller
             ]);
 
         return redirect('/');
+    }
+
+    public function sendMail(){
+        Mail::send(new SubscriptionMail());
     }
 
     public function destroy($id)

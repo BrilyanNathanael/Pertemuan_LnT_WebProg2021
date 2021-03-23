@@ -12,6 +12,7 @@
     </head>
     <body>
         <div class="container">
+            <a href="/mail">Send an email</a>
             <a href="/create" class="btn btn-primary mt-3 mb-3">Create Article</a>
             <a href="/genre" class="btn btn-primary mt-3 mb-3">Create Genre</a><br>
             @if($message = Session::get('success'))
