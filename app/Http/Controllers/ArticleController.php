@@ -8,6 +8,7 @@ use App\Genre;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SubscriptionMail;
+use Validator;
 
 class ArticleController extends Controller
 {
@@ -74,5 +75,63 @@ class ArticleController extends Controller
         Storage::delete('images/' . $image->image);
         Article::destroy($id);
         return redirect('/');
+    }
+
+    public function apiIndex(){
+        $articles = Article::get(['id', 'penulis', 'judul']);
+        return response()->json([
+            'status' => 200,
+            'data' => $articles
+        ]);
+    }
+
+    public function apiStore(Request $request){
+        $validator = Validator::make($request->all(), [
+            'genre_id' => 'required',
+            'penulis' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        Article::create([
+            'genre_id' => $request->genre_id,
+            'penulis' => $request->penulis,
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'image' => $request->image
+        ]);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Data berhasil ditambahkan!'
+        ]);
+    }
+
+    public function apiUpdate(Request $request, $id){
+        Article::where('id', $id)
+            ->update([
+                'penulis' => $request->penulis,
+                'judul' => $request->judul,
+                'deskripsi' => $request->deskripsi,
+                'image' => $request->image
+            ]);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Data berhasil diubah!'
+        ]);
+    }
+
+    public function apiDestroy($id){
+        Article::destroy($id);
+        return response()->json([
+            'status' => 200,
+            'message' => 'Data berhasil dihapus!'
+        ]);
     }
 }
