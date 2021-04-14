@@ -26,6 +26,19 @@ class ArticleController extends Controller
 
     public function store(Request $request)
     {
+        $message = array(
+            'penulis.required' => 'nama penulis harus diisi.',
+            'penulis.size' => 'nama penulis harus 5 karakter.',
+            'judul.required' => 'judul harus diisi.',
+            'deskripsi.required' => 'deskripsi harus diisi.'
+        );
+
+        $request->validate([
+            'penulis' => 'required|size:5',
+            'judul' => 'required',
+            'deskripsi' => 'required'
+        ], $message);
+
         // insert
         $image = $request->file('image');
         $new_name = time() . '.' . $image->getClientOriginalExtension();

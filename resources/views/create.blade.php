@@ -16,15 +16,30 @@
                 @csrf
                 <div class="form-group">
                     <label for="penulis">Penulis</label>
-                    <input type="text" name="penulis" class="form-control" id="penulis" placeholder="Nama Penulis">
+                    <input type="text" name="penulis" class="form-control @error('penulis')is-invalid @enderror" id="penulis" placeholder="Nama Penulis">
+                    @error('penulis')
+                    <div class="invalid-feedback">
+                        {{$message}}
+                    </div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="judul">Judul</label>
-                    <input type="text" name="judul" class="form-control" id="judul" placeholder="Judul Artikel">
+                    <input type="text" name="judul" class="form-control @error('judul')is-invalid @enderror" id="judul" placeholder="Judul Artikel">
+                    @error('judul')
+                    <div class="invalid-feedback">
+                        {{$message}}
+                    </div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="deskripsi">Deskripsi</label>
-                    <input type="text" name="deskripsi" class="form-control" id="deskripsi" placeholder="Deskripsi">
+                    <input type="text" name="deskripsi" class="form-control @error('deskripsi')is-invalid @enderror" id="deskripsi" placeholder="Deskripsi" >
+                    @error('deskripsi')
+                    <div class="invalid-feedback">
+                        {{$message}}
+                    </div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="judul">Genre</label>
